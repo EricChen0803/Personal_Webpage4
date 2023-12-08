@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Weather</title>
+</head>
+<body>
+    <h1> Current Weather</h1>
+    <current-weather>Current Weather Conditions Unavailable</current-weather>
+    <a href = './index.html'>To Rating Widget</a>
+    <script type="module">
+        class Weather extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.imgs = document.createElement('img');
+                this.shadowRoot.appendChild(this.imgs);
+                this.text = document.createElement('p');
+                this.text.id = 'divs';
+                this.shadowRoot.appendChild(this.text);
+
+                this.fetchWeather();
+            }
+
+            fetchWeather(){
+                fetch('https://api.weather.gov/gridpoints/SGX/55,22/forecast')
+                    .then(response => response.json())
+                    .then(data => {
+                        var icon_weather = data['properties']['periods'][0]['icon']
+                        console.log(data)
+                        this.imgs.src = icon_weather
+                        var dt = data['properties']['periods'][0]['shortForecast'] +'; Temperature: '+ data['properties']['periods'][0]['temperature'] + data['properties']['periods'][0]['temperatureUnit'] 
+                        dt = dt+'; WindSpeed: '+ data['properties']['periods'][0]['windSpeed']
+                        dt = dt+'; Relative Humidity: '+ data['properties']['periods'][0]['relativeHumidity']['value']+'%'
+                        dt = dt+'; Wind Direction: '+ data['properties']['periods'][0]['windDirection']+';'
+                        this.displayFact(dt);
+                    })
+                    .catch(() => {
+                        this.displayFact("Network Error");
+                    });
+                
+            }
+
+            displayFact(text) {
+                const textElement = this.shadowRoot.getElementById('divs');
+                textElement.textContent = text;
+            }
+        }
+        customElements.define('current-weather', Weather);
+    </script>
+        
+</body>
+</html>

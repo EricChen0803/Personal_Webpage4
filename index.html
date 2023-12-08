@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating Widget</title>
+
+</head>
+<body>
+    <h1>Rating Widget</h1>
+    <rating-widget id = 'ratings'>
+        <form action = "https://httpbin.org/post" method = "POST" id = 'myform'>
+            <label for = "rating">How satisfied are you?</label>
+            <input type = "hidden" name = "question" value = "How satisfied are you?">
+            <input type = "hidden" id = 'sentBy' name = "sentBy" value = "HTML">
+            <input type = "number" id = "rating" name = "rating" min = "1" max = "5" value = "0" required>
+            <button type = "submit" id = 'submit_btn'>Submit</button>
+        </form>
+    </rating-widget>
+    <a href = './weather.html'>To Current Weather</a>
+    <script type="module">
+        class Widget extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.rates = document.createElement('div');
+                this.span1 = document.createElement('span');
+                this.span2 = document.createElement('span');
+                this.span3 = document.createElement('span');
+                this.span4 = document.createElement('span');
+                this.span5 = document.createElement('span');
+                this.span1.classList.add('stars');
+                this.span2.classList.add('stars');
+                this.span3.classList.add('stars');
+                this.span4.classList.add('stars');
+                this.span5.classList.add('stars');
+                this.rates.appendChild(this.span1);
+                this.rates.appendChild(this.span2);
+                this.rates.appendChild(this.span3);
+                this.rates.appendChild(this.span4);
+                this.rates.appendChild(this.span5);
+                this.shadowRoot.appendChild(this.rates);
+            }
+
+            connectedCallback() {
+                setTimeout(() => {
+                    this.span1.innerHTML = '&#9733;';
+                    this.span2.innerHTML = '&#9733;';
+                    this.span3.innerHTML = '&#9733;';
+                    this.span4.innerHTML = '&#9733;';
+                    this.span5.innerHTML = '&#9733;';
+                    const starElements = [this.span1, this.span2, this.span3, this.span4, this.span5];
+                    starElements.forEach(star => {
+                        star.style.color = 'grey';
+                        star.style.fontSize = '64px';
+                    });
+                }, 0);
+                this.span1.addEventListener('mouseover', () => {
+                    this.spans1();
+                });
+                this.span2.addEventListener('mouseover', () => {
+                    this.spans2();
+                });
+                this.span3.addEventListener('mouseover', () => {
+                    this.spans3();
+                });
+                this.span4.addEventListener('mouseover', () => {
+                    this.spans4();
+                });
+                this.span5.addEventListener('mouseover', () => {
+                    this.spans5();
+                });
+                this.span1.addEventListener('click', () => {
+                    this.submit1();
+                });
+                this.span2.addEventListener('click', () => {
+                    this.submit2();
+                });
+                this.span3.addEventListener('click', () => {
+                    this.submit3();
+                });
+                this.span4.addEventListener('click', () => {
+                    this.submit4();
+                });
+                this.span5.addEventListener('click', () => {
+                    this.submit5();
+                });
+            }
+            spans1(){
+                this.span1.style.color = 'yellow';
+                this.span2.style.color = 'grey';
+                this.span3.style.color = 'grey';
+                this.span4.style.color = 'grey';
+                this.span5.style.color = 'grey';
+            }
+            spans2(){
+                this.span1.style.color = 'yellow';
+                this.span2.style.color = 'yellow';
+                this.span3.style.color = 'grey';
+                this.span4.style.color = 'grey';
+                this.span5.style.color = 'grey';
+            }
+            spans3(){
+                this.span1.style.color = 'yellow';
+                this.span2.style.color = 'yellow';
+                this.span3.style.color = 'yellow';
+                this.span4.style.color = 'grey';
+                this.span5.style.color = 'grey';
+            }
+            spans4(){
+                this.span1.style.color = 'yellow';
+                this.span2.style.color = 'yellow';
+                this.span3.style.color = 'yellow';
+                this.span4.style.color = 'yellow';
+                this.span5.style.color = 'grey';
+            }
+            spans5(){
+                this.span1.style.color = 'yellow';
+                this.span2.style.color = 'yellow';
+                this.span3.style.color = 'yellow';
+                this.span4.style.color = 'yellow';
+                this.span5.style.color = 'yellow';
+            }
+
+            submit1(){
+                var rate = document.getElementById('rating');
+                rate.value = 1;
+                var send = document.getElementById('sentBy');
+                send.value = 'JS';
+                var myForm = document.getElementById('myform');
+                this.ps = document.createElement('div');
+                this.shadowRoot.removeChild(this.rates);
+                this.ps.innerHTML = "Thanks for your feedback of 1 star. We'll try to do better";
+                this.shadowRoot.appendChild(this.ps);
+
+                let formData = new FormData(myForm);
+                fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: new Headers({'X-Sent-By': 'JS'}),
+                })
+            }
+
+            submit2(){
+                var rate = document.getElementById('rating');
+                rate.value = 2;
+                var send = document.getElementById('sentBy');
+                send.value = 'JS';
+                var myForm = document.getElementById('myform');
+                this.ps = document.createElement('div');
+                this.shadowRoot.removeChild(this.rates);
+                this.ps.innerHTML = "Thanks for your feedback of 2 stars. We'll try to do better";
+                this.shadowRoot.appendChild(this.ps);
+                let formData = new FormData(myForm);
+                fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: new Headers({'X-Sent-By': 'JS'}),
+                })
+            }
+            submit3(){
+                var rate = document.getElementById('rating');
+                rate.value = 3;
+                var send = document.getElementById('sentBy');
+                send.value = 'JS';
+                var myForm = document.getElementById('myform');
+                this.ps = document.createElement('div');
+                this.shadowRoot.removeChild(this.rates);
+                this.ps.innerHTML = "Thanks for your feedback of 3 stars. We'll try to do better";
+                this.shadowRoot.appendChild(this.ps);
+                let formData = new FormData(myForm);
+                fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: new Headers({'X-Sent-By': 'JS'}),
+                })
+            }
+            submit4(){
+                var rate = document.getElementById('rating');
+                rate.value = 4;
+                var send = document.getElementById('sentBy');
+                send.value = 'JS';
+                var myForm = document.getElementById('myform');
+                this.ps = document.createElement('div');
+                this.shadowRoot.removeChild(this.rates);
+                this.ps.innerHTML = "Thanks for 4 stars rating!";
+                this.shadowRoot.appendChild(this.ps);
+                let formData = new FormData(myForm);
+                fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: new Headers({'X-Sent-By': 'JS'}),
+                })
+            }
+            submit5(){
+                var rate = document.getElementById('rating');
+                rate.value = 5;
+                var send = document.getElementById('sentBy');
+                send.value = 'JS';
+                var myForm = document.getElementById('myform');
+                this.ps = document.createElement('div');
+                this.shadowRoot.removeChild(this.rates);
+                this.ps.innerHTML = "Thanks for 5 stars rating!";
+                this.shadowRoot.appendChild(this.ps);
+                let formData = new FormData(myForm);
+                fetch('https://httpbin.org/post', {
+                    method: 'POST',
+                    body: formData,
+                    headers: new Headers({'X-Sent-By': 'JS'}),
+                })
+            }
+        }
+
+        customElements.define('rating-widget', Widget);
+    
+    </script>
+</body>
+</html>
