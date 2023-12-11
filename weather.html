@@ -27,10 +27,10 @@
                 fetch('https://api.weather.gov/gridpoints/SGX/55,22/forecast')
                     .then(response => response.json())
                     .then(data => {
-                        var icon_weather = data['properties']['periods'][0]['icon']
                         console.log(data)
+                        var icon_weather = data['properties']['periods'][0]['icon']
                         this.imgs.src = icon_weather
-                        var dt = data['properties']['periods'][0]['shortForecast'] +'; Temperature: '+ data['properties']['periods'][0]['temperature'] + data['properties']['periods'][0]['temperatureUnit'] 
+                        var dt = data['properties']['periods'][0]['shortForecast'] +'; Temperature: '+ data['properties']['periods'][0]['temperature'] +'°'+ data['properties']['periods'][0]['temperatureUnit'] 
                         dt = dt+'; WindSpeed: '+ data['properties']['periods'][0]['windSpeed']
                         dt = dt+'; Relative Humidity: '+ data['properties']['periods'][0]['relativeHumidity']['value']+'%'
                         dt = dt+'; Wind Direction: '+ data['properties']['periods'][0]['windDirection']+';'
